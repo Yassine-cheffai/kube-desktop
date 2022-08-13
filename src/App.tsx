@@ -7,8 +7,10 @@ import { invoke } from '@tauri-apps/api/tauri'
 
 function App() {
   const [greeting, setGreeting] = useState<string>("");
+  const [names, setNames] = useState<string []>([]);
   useEffect(() => {
-    invoke('greet', { name: 'World'}).then((response: any) => setGreeting(response)) 
+    invoke('greet', { name: 'World'}).then((response: any) => setGreeting(response));
+    invoke('get_names', {}).then((response: any) => setNames(response)); 
   }, []);
   return (
     <div className="App">
@@ -19,6 +21,15 @@ function App() {
         </p>
         <p>
           Edit <code>src/App.tsx</code> and save to reload (Yassine Cheffai).
+        </p>
+        <p>
+          {names.map(
+            (name) => (
+              <li>
+                {name}
+              </li>
+            )
+          )}
         </p>
         <a
           className="App-link"
