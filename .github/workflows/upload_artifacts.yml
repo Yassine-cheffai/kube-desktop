@@ -1,4 +1,4 @@
-name: 'My Workflow'
+name: 'upload artifacts'
 
 on: pull_request
 
