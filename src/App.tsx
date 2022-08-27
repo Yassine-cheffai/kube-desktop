@@ -32,7 +32,10 @@ const SideBar = () => {
 }
 function App() {
   return (
-    <SideBar />
+    <>
+      <SideBar />
+      
+    </>
   );
 }
 

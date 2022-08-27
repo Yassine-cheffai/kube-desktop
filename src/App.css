@@ -2,10 +2,11 @@
   background-color: #2F769E;
   display: flex;
   justify-content: center;
-  align-items: center;  height: 200px;
+  align-items: center;
+  height: 200px;
 }
 
 .resources {
   list-style-type: none;
-color: #F4F4F4;
+  color: #F4F4F4;
 }
