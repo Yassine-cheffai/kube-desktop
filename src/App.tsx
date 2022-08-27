@@ -1,46 +1,38 @@
-import React, {useState, useEffect} from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-import { invoke } from '@tauri-apps/api/tauri'
 
-
-function App() {
-  const [greeting, setGreeting] = useState<string>("");
-  const [names, setNames] = useState<string []>([]);
-  useEffect(() => {
-    invoke('greet', { name: 'World'}).then((response: any) => setGreeting(response));
-    invoke('get_names', {}).then((response: any) => setNames(response)); 
-  }, []);
+const SideBar = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          {greeting}
-        </p>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload (Yassine Cheffai).
-        </p>
-        <p>
-          {names.map(
-            (name) => (
-              <li>
-                {name}
-              </li>
-            )
-          )}
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='side_bar'>
+      <ul className='resources'>
+        <li>
+          Services
+        </li>
+        <li>
+          Pods
+        </li>
+        <li>
+          Jobs
+        </li>
+        <li>
+          CronJobs
+        </li>
+        <li>
+          NameSpaces
+        </li>
+        <li>
+          Configs
+        </li>
+        <li>
+          SecretMaps
+        </li>
+      </ul>
     </div>
+  )
+}
+function App() {
+  return (
+    <SideBar />
   );
 }
 
