@@ -1,7 +1,11 @@
+import { PodsList } from "./resources/Pods";
+
+
 const MainArea = () => {
   return (
     <div className="main_area">
-      main area
+      <div>main area</div>
+      <PodsList />
     </div>
   )
 }
