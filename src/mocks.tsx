@@ -40,7 +40,7 @@ export const getCronJobs = () => {
     ]
 }
 
-export const getConfigsMap = () => {
+export const getConfigMaps = () => {
     return [
         {id: "1", name: "ConfigMap 1", createdAt: "11-09-2022"} as ConfigMap,
         {id: "3", name: "ConfigMap 3", createdAt: "13-09-2022"} as ConfigMap,
@@ -48,50 +48,10 @@ export const getConfigsMap = () => {
     ]
 }
 
-export const getSecret = () => {
+export const getSecrets = () => {
     return [
         {id: "1", name: "Secret 1", createdAt: "11-09-2022"} as Secret,
         {id: "3", name: "Secret 3", createdAt: "13-09-2022"} as Secret,
         {id: "2", name: "Secret 2", createdAt: "12-09-2022"} as Secret,
     ]
-}
-
-export const getPodDetails = (podId: String) => {
-    return {
-        id: podId,
-        name: "Pod 1",
-        createdAt: "",
-    }
-}
-
-export const getServiceDetails = (serviceId: String) => {
-    return {
-        id: serviceId,
-        name: "Service 1",
-        createdAt: "",
-    }
-}
-
-export const getNameSpaceDetails = (nameSpaceId: String) => {
-    return {
-        id: nameSpaceId,
-        name: "NameSpace 1",
-        createdAt: "",
-    }
-}
-
-export const getJobDetails = (jobId: String) => {
-    return {
-        id: jobId,
-        name: "Job 1",
-        createdAt: "",
-    }
-}
-
-export const getCronJob = (cronJobId: String) => {
-    return {
-        id: cronJobId,
-        name: "Job 1",
-        createdAt: "",
-    }
 }
