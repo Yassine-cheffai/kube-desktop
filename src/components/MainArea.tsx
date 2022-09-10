@@ -6,24 +6,21 @@ import { CronJobsList } from "./resources/CronJobs";
 import { ConfigMapsList } from "./resources/ConfigMaps";
 import { SecretsList } from "./resources/Secrets";
 
+type MainAreaProps = {
+  selectedResource: string;
+}
 
-const MainArea = () => {
+const MainArea = ({selectedResource}: MainAreaProps) => {
   return (
-    <div className="main_area">
+    <div>
       <div>main area</div>
-      <PodsList />
-      <hr />
-      <ServicesList />
-      <hr />
-      <NameSpacesList />
-      <hr />
-      <JobsList />
-      <hr />
-      <CronJobsList />
-      <hr />
-      <ConfigMapsList />
-      <hr />
-      <SecretsList />
+      {selectedResource === "Services" ? <ServicesList />: ""}
+      {selectedResource === "Pods" ? <PodsList />: ""}
+      {selectedResource === "Jobs" ? <JobsList />: ""}
+      {selectedResource === "CronJobs" ? <CronJobsList />: ""}
+      {selectedResource === "NameSpaces" ? <NameSpacesList />: ""}
+      {selectedResource === "Configs" ? <ConfigMapsList />: ""}
+      {selectedResource === "SecretMaps" ? <SecretsList />: ""}
     </div>
   )
 }

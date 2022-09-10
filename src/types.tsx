@@ -33,3 +33,12 @@ export type Secret = {
   name: string,
   createdAt: string,
 }
+export const RESOURCES_TYPES = [
+  "Services",
+  "Pods",
+  "Jobs",
+  "CronJobs",
+  "NameSpaces",
+  "Configs",
+  "SecretMaps",
+]

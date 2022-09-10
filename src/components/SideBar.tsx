@@ -1,28 +1,23 @@
-const SideBar = () => {
+import {RESOURCES_TYPES} from "../types";
+
+type SideBarProps = {
+  selectedResource: string,
+  setSelectedResource: (val: string) => void,
+}
+const SideBar = ({ selectedResource, setSelectedResource }: SideBarProps) => {
   return (
-    <div className='side_bar'>
-      <ul className='resources'>
-        <li>
-          Services
-        </li>
-        <li>
-          Pods
-        </li>
-        <li>
-          Jobs
-        </li>
-        <li>
-          CronJobs
-        </li>
-        <li>
-          NameSpaces
-        </li>
-        <li>
-          Configs
-        </li>
-        <li>
-          SecretMaps
-        </li>
+    <div className="SideBar">
+      <ul className="SideBarList">
+        {RESOURCES_TYPES.map((val, key) => (
+          <li
+            key={key}
+            className="row"
+            id={selectedResource === val ? "active" : ""}
+            onClick={() => { setSelectedResource(val) }}
+          >
+            <div>{val}</div>
+          </li>
+        ))}
       </ul>
     </div>
   )
