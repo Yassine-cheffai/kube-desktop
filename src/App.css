@@ -43,3 +43,19 @@ body {
 .SideBarList #active {
   background-color: #216287;
 }
+
+.ResourceTable {
+  width: 100%;
+  justify-content:center;
+  align-items: center;
+}
+
+.ResourceTable td {
+  text-align: center;
+}
+
+.MainArea {
+  width: 88%;
+  margin: 0%;
+  padding: 0%;
+}

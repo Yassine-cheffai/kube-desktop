@@ -5,7 +5,7 @@ import { useState } from "react";
 
 function App() {
   // Services = RESOURCE_TYPES[0]
-  const [selectedResource, setSelectedResource] = useState("Services");
+  const [selectedResource, setSelectedResource] = useState("Pods");
   return (
     <div className="App">
       <SideBar selectedResource={selectedResource} setSelectedResource={setSelectedResource} />

@@ -13,19 +13,38 @@ export const PodsList = () => {
     setIsLoading(false);
   }, [])
   return (
-    <>
+    <div>
       {isLoading ? 'Loading...' :
-        <ul>
-          {
-            pods.map((pod) => (
-              <li>
-                {pod.id} - {pod.name} - {pod.createdAt}
-              </li>
-            ))
-          }
-        </ul>
+        <table className="ResourceTable">
+          <thead>
+            <td>Name</td>
+            <td>Ready</td>
+            <td>Status</td>
+            <td>Restarts</td>
+            <td>Age</td>
+            <td>IP</td>
+            <td>Node</td>
+            <td>Nominated Node</td>
+            <td>Readiness Gates</td>
+          </thead>
+          <tbody>
+            {pods.map((pod) => (
+              <tr>
+                <td>{pod.name}</td>
+                <td>{pod.ready}</td>
+                <td>{pod.status}</td>
+                <td>{pod.restarts}</td>
+                <td>{pod.age}</td>
+                <td>{pod.ip}</td>
+                <td>{pod.node}</td>
+                <td>{pod.nominated_node}</td>
+                <td>{pod.readiness_gates}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       }
-    </>
+    </div>
   )
 }
 

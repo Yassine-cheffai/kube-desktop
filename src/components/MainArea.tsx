@@ -12,8 +12,7 @@ type MainAreaProps = {
 
 const MainArea = ({selectedResource}: MainAreaProps) => {
   return (
-    <div>
-      <div>main area</div>
+    <div className="MainArea">
       {selectedResource === "Services" ? <ServicesList />: ""}
       {selectedResource === "Pods" ? <PodsList />: ""}
       {selectedResource === "Jobs" ? <JobsList />: ""}

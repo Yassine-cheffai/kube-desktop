@@ -1,7 +1,13 @@
 export type Pod = {
-  id: string,
   name: string,
-  createdAt: string,
+  ready: string,
+  status: string,
+  restarts: number,
+  age: string,
+  ip: string,
+  node: string,
+  nominated_node: string,
+  readiness_gates: string,
 }
 export type Service = {
   id: string,
