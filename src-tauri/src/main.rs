@@ -9,6 +9,7 @@ use kube::{
     api::{Api, ListParams, ResourceExt},
     Client,
 };
+use std::collections::HashMap;
 
 fn main() {
     tauri::Builder::default()
@@ -18,7 +19,7 @@ fn main() {
 }
 
 #[tauri::command]
-fn get_pods_command() -> Vec<String> {
+fn get_pods_command() -> Vec<HashMap<String, String>> {
     println!("fetching pods...");
     let result_pods = get_pods();
     match result_pods {
@@ -30,16 +31,21 @@ fn get_pods_command() -> Vec<String> {
 }
 
 #[tokio::main]
-async fn get_pods() -> Result<Vec<String>, Box<dyn std::error::Error>> {
+async fn get_pods() -> Result<Vec<HashMap<String, String>>, Box<dyn std::error::Error>> {
     // Infer the runtime environment and try to create a Kubernetes Client
     let client = Client::try_default().await?;
-    let mut pods_list: Vec<String> = vec![];
+    let mut pods_list: Vec<HashMap<String, String>> = vec![];
 
     // Read pods in the configured namespace into the typed interface from k8s-openapi
     let pods: Api<Pod> = Api::default_namespaced(client);
     for p in pods.list(&ListParams::default()).await? {
         // println!("found pod {}", p.name());
-        pods_list.push(p.name());
+        let mut pod_data:HashMap<String, String> = HashMap::new();
+        pod_data.insert("name".to_string(), p.name());
+        let pod_status = p.status.unwrap();
+        pod_data.insert("ip".to_string(), pod_status.pod_ip.unwrap());
+        pod_data.insert("status".to_string(), pod_status.phase.unwrap());
+        pods_list.push(pod_data);
     }
     Ok(pods_list)
 }
