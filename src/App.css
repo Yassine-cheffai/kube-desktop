@@ -48,10 +48,21 @@ body {
   width: 100%;
   justify-content:center;
   align-items: center;
+  margin-top: 80px;
+  border-collapse: collapse;
 }
 
-.ResourceTable td {
+.ResourceTable td{
+  padding: 7px;
   text-align: center;
+}
+
+.ResourceTable tbody tr:nth-child(odd) {
+  background-color: lightgray;
+}
+
+th {
+  padding-bottom: 20px;
 }
 
 .MainArea {

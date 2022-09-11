@@ -17,15 +17,15 @@ export const PodsList = () => {
       {isLoading ? 'Loading...' :
         <table className="ResourceTable">
           <thead>
-            <td>Name</td>
-            <td>Ready</td>
-            <td>Status</td>
-            <td>Restarts</td>
-            <td>Age</td>
-            <td>IP</td>
-            <td>Node</td>
-            <td>Nominated Node</td>
-            <td>Readiness Gates</td>
+            <th>Name</th>
+            <th>Ready</th>
+            <th>Status</th>
+            <th>Restarts</th>
+            <th>Age</th>
+            <th>IP</th>
+            <th>Node</th>
+            <th>Nominated Node</th>
+            <th>Readiness Gates</th>
           </thead>
           <tbody>
             {pods.map((pod) => (
