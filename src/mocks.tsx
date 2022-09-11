@@ -4,9 +4,9 @@ export const getPods = () => {
     // NAME                        READY   STATUS      RESTARTS   AGE   IP            NODE                              NOMINATED NODE   READINESS GATES
     // api-ccdc58cb8-4w4l4         1/1     Running     0          84s   10.8.20.214   gke-cloud-dev-b-0-9399c698-64w9   <none>           <none>
     return [
-        { name: "api-ccdc58cb8-4w4l4", ready: "1/1", status: "running", restarts: 0, age: "84s", ip: "10.8.20.214", node: "gke-cloud-dev-b-0-9399c698-64w9", nominated_node: "none", readiness_gates: "none" } as Pod,
-        { name: "api-ccdc58cb8-4w4l4", ready: "1/1", status: "running", restarts: 0, age: "84s", ip: "10.8.20.214", node: "gke-cloud-dev-b-0-9399c698-64w9", nominated_node: "none", readiness_gates: "none" } as Pod,
-        { name: "api-ccdc58cb8-4w4l4", ready: "1/1", status: "running", restarts: 0, age: "84s", ip: "10.8.20.214", node: "gke-cloud-dev-b-0-9399c698-64w9", nominated_node: "none", readiness_gates: "none" } as Pod,
+        { name: "api-ccdc58cb8-4w4l4", ready: "1/1", status: "running", restarts: 0, age: "84s", ip: "10.8.20.214", node: "gke-cloud-dev-b-0-9399c698-64w9", nominated_node: "none", readiness_gates: "none", start_time: "1662819661" } as Pod,
+        { name: "api-ccdc58cb8-4w4l4", ready: "1/1", status: "running", restarts: 0, age: "84s", ip: "10.8.20.214", node: "gke-cloud-dev-b-0-9399c698-64w9", nominated_node: "none", readiness_gates: "none", start_time: "1662819661" } as Pod,
+        { name: "api-ccdc58cb8-4w4l4", ready: "1/1", status: "running", restarts: 0, age: "84s", ip: "10.8.20.214", node: "gke-cloud-dev-b-0-9399c698-64w9", nominated_node: "none", readiness_gates: "none", start_time: "1662819661" } as Pod,
     ];
 }
 

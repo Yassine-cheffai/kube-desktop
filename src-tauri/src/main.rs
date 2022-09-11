@@ -32,6 +32,8 @@ fn get_pods_command() -> Vec<HashMap<String, String>> {
 
 #[tokio::main]
 async fn get_pods() -> Result<Vec<HashMap<String, String>>, Box<dyn std::error::Error>> {
+    // NAME                        READY   STATUS      RESTARTS   AGE   IP            NODE                              NOMINATED NODE   READINESS GATES
+    // api-ccdc58cb8-4w4l4         1/1     Running     0          84s   10.8.20.214   gke-cloud-dev-b-0-9399c698-64w9   <none>           <none>
     // Infer the runtime environment and try to create a Kubernetes Client
     let client = Client::try_default().await?;
     let mut pods_list: Vec<HashMap<String, String>> = vec![];
@@ -45,6 +47,9 @@ async fn get_pods() -> Result<Vec<HashMap<String, String>>, Box<dyn std::error::
         let pod_status = p.status.unwrap();
         pod_data.insert("ip".to_string(), pod_status.pod_ip.unwrap());
         pod_data.insert("status".to_string(), pod_status.phase.unwrap());
+        pod_data.insert("nominated_node".to_string(), pod_status.nominated_node_name.unwrap_or("<none>".to_string()));
+        let start_time = pod_status.start_time.unwrap();
+        pod_data.insert("start_time".to_string(), start_time.0.timestamp().to_string());
         pods_list.push(pod_data);
     }
     Ok(pods_list)

@@ -34,7 +34,7 @@ export const PodsList = () => {
                 <td>{pod.ready}</td>
                 <td>{pod.status}</td>
                 <td>{pod.restarts}</td>
-                <td>{pod.age}</td>
+                <td>{Math.floor((Math.floor(Date.now() / 1000) - Number(pod.start_time)) / 3600)} h</td>
                 <td>{pod.ip}</td>
                 <td>{pod.node}</td>
                 <td>{pod.nominated_node}</td>

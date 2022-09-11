@@ -8,6 +8,7 @@ export type Pod = {
   node: string,
   nominated_node: string,
   readiness_gates: string,
+  start_time: string,
 }
 export type Service = {
   id: string,
