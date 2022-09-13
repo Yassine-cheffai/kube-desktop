@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { invoke } from '@tauri-apps/api';
-import { getPods } from "../../mocks";
+// import { getPods } from "../../mocks";
 import { Pod } from "../../types";
 
 
