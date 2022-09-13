@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-//import { invoke } from '@tauri-apps/api';
+import { invoke } from '@tauri-apps/api';
 import { getPods } from "../../mocks";
 import { Pod } from "../../types";
 
@@ -8,8 +8,8 @@ export const PodsList = () => {
   const [pods, setPods] = useState<Pod[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   useEffect(() => {
-    // invoke("get_pods_command").then((response: any) => { setPods(response); setIsLoading(false) });
-    setPods(getPods());
+    invoke("get_pods_command").then((response: any) => { setPods(response); setIsLoading(false) });
+    // setPods(getPods());
     setIsLoading(false);
   }, [])
   return (

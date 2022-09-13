@@ -50,6 +50,7 @@ async fn get_pods() -> Result<Vec<HashMap<String, String>>, Box<dyn std::error::
         pod_data.insert("nominated_node".to_string(), pod_status.nominated_node_name.unwrap_or("<none>".to_string()));
         let start_time = pod_status.start_time.unwrap();
         pod_data.insert("start_time".to_string(), start_time.0.timestamp().to_string());
+
         pods_list.push(pod_data);
     }
     Ok(pods_list)
