@@ -5,6 +5,7 @@
 // https://github.com/tauri-apps/tauri/blob/dev/examples/commands/main.rs
 
 use k8s_openapi::api::core::v1::Pod;
+use k8s_openapi::api::core::v1::Service;
 use kube::{
     api::{Api, ListParams, ResourceExt},
     Client,
@@ -13,7 +14,7 @@ use std::collections::HashMap;
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![get_pods_command])
+        .invoke_handler(tauri::generate_handler![get_pods_command, get_services_command])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
@@ -24,9 +25,17 @@ fn get_pods_command() -> Vec<HashMap<String, String>> {
     let result_pods = get_pods();
     match result_pods {
         Ok(pods) => pods,
-        Err(_) => {
-            vec![]
-        }
+        Err(_) => vec![]
+    }
+}
+
+#[tauri::command]
+fn get_services_command() -> Vec<HashMap<String, String>> {
+    println!("fetching services...");
+    let result_services = get_services();
+    match result_services {
+        Ok(services) => services,
+        Err(_) => vec![]
     }
 }
 
@@ -45,6 +54,9 @@ async fn get_pods() -> Result<Vec<HashMap<String, String>>, Box<dyn std::error::
         let mut pod_data:HashMap<String, String> = HashMap::new();
         pod_data.insert("name".to_string(), p.name());
         let pod_status = p.status.unwrap();
+        let conditions = pod_status.conditions.unwrap();
+        println!("pod conditions ->");
+        println!("{:?}", conditions);
         pod_data.insert("ip".to_string(), pod_status.pod_ip.unwrap());
         pod_data.insert("status".to_string(), pod_status.phase.unwrap());
         pod_data.insert("nominated_node".to_string(), pod_status.nominated_node_name.unwrap_or("<none>".to_string()));
@@ -54,4 +66,24 @@ async fn get_pods() -> Result<Vec<HashMap<String, String>>, Box<dyn std::error::
         pods_list.push(pod_data);
     }
     Ok(pods_list)
+}
+
+#[tokio::main]
+async fn get_services()  -> Result<Vec<HashMap<String, String>>, Box<dyn std::error::Error>> {
+    let mut services_list: Vec<HashMap<String, String>> = vec![];
+    let client = Client::try_default().await?;
+    let services: Api<Service> = Api::default_namespaced(client);
+
+    for s in services.list(&ListParams::default()).await? {
+        let mut service_data: HashMap<String, String> = HashMap::new();
+        service_data.insert("name".to_string(), s.name());
+
+        let service_status = s.status.unwrap();
+
+    }
+
+
+
+    return Ok(services_list);
+
 }
