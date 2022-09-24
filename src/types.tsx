@@ -11,9 +11,13 @@ export type Pod = {
   start_time: string,
 }
 export type Service = {
-  id: string,
   name: string,
-  createdAt: string,
+  type: string,
+  cluster_ip: string,
+  external_ip: string,
+  port: string,
+  age: string,
+  selector: string,
 }
 export type NameSpace = {
   id: string,

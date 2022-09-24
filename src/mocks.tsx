@@ -12,9 +12,9 @@ export const getPods = () => {
 
 export const getServices = () => {
     return [
-        { id: "1", name: "Service 1", createdAt: "11-09-2022" } as Service,
-        { id: "3", name: "Service 3", createdAt: "13-09-2022" } as Service,
-        { id: "2", name: "Service 2", createdAt: "12-09-2022" } as Service,
+        {name: "api", type: "ClusterIP", cluster_ip: "10.155.103.234", external_ip: "<none>", age: "40d", selector: "stack.okteto.com/name"} as Service,
+        {name: "api", type: "ClusterIP", cluster_ip: "10.155.103.234", external_ip: "<none>", age: "40d", selector: "stack.okteto.com/name"} as Service,
+        {name: "api", type: "ClusterIP", cluster_ip: "10.155.103.234", external_ip: "<none>", age: "40d", selector: "stack.okteto.com/name"} as Service,
     ]
 }
 
