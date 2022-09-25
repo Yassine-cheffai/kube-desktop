@@ -70,3 +70,7 @@ th {
   margin: 0%;
   padding: 0%;
 }
+
+.resources_list {
+  list-style-type: none;
+}

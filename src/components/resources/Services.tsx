@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 import { Service } from "../../types";
 import { getServices } from "../../mocks";
-// import { invoke } from '@tauri-apps/api';
+import { invoke } from '@tauri-apps/api';
 
 export const ServicesList = () => {
   const [services, setServices] = useState<Service[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    setServices(getServices());
-    // invoke("get_services_command").then((response: any) => { setServices(response); setIsLoading(false) });
+    // setServices(getServices());
+    invoke("get_services_command").then((response: any) => { setServices(response); setIsLoading(false) });
     setIsLoading(false);
   }, [])
   return (
@@ -32,7 +32,7 @@ export const ServicesList = () => {
                 <td>{service.cluster_ip}</td>
                 <td>{service.external_ip}</td>
                 <td>{service.age}</td>
-                <td>{service.selector}</td>
+                <td>{service.selector.split("%").map((s) => (<li className="resources_list">{s}</li>))}</td>
               </tr>
             ))}
           </tbody>

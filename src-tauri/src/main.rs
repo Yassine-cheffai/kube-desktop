@@ -4,13 +4,8 @@
 )]
 // https://github.com/tauri-apps/tauri/blob/dev/examples/commands/main.rs
 
-use k8s_openapi::api::core::v1::Pod;
-use k8s_openapi::api::core::v1::Service;
-use kube::{
-    api::{Api, ListParams, ResourceExt},
-    Client,
-};
 use std::collections::HashMap;
+mod resources;
 
 fn main() {
     tauri::Builder::default()
@@ -22,7 +17,7 @@ fn main() {
 #[tauri::command]
 fn get_pods_command() -> Vec<HashMap<String, String>> {
     println!("fetching pods...");
-    let result_pods = get_pods();
+    let result_pods = resources::get_pods();
     match result_pods {
         Ok(pods) => pods,
         Err(_) => vec![]
@@ -32,58 +27,9 @@ fn get_pods_command() -> Vec<HashMap<String, String>> {
 #[tauri::command]
 fn get_services_command() -> Vec<HashMap<String, String>> {
     println!("fetching services...");
-    let result_services = get_services();
+    let result_services = resources::get_services();
     match result_services {
         Ok(services) => services,
         Err(_) => vec![]
     }
-}
-
-#[tokio::main]
-async fn get_pods() -> Result<Vec<HashMap<String, String>>, Box<dyn std::error::Error>> {
-    // NAME                        READY   STATUS      RESTARTS   AGE   IP            NODE                              NOMINATED NODE   READINESS GATES
-    // api-ccdc58cb8-4w4l4         1/1     Running     0          84s   10.8.20.214   gke-cloud-dev-b-0-9399c698-64w9   <none>           <none>
-    // Infer the runtime environment and try to create a Kubernetes Client
-    let client = Client::try_default().await?;
-    let mut pods_list: Vec<HashMap<String, String>> = vec![];
-
-    // Read pods in the configured namespace into the typed interface from k8s-openapi
-    let pods: Api<Pod> = Api::default_namespaced(client);
-    for p in pods.list(&ListParams::default()).await? {
-        // println!("found pod {}", p.name());
-        let mut pod_data:HashMap<String, String> = HashMap::new();
-        pod_data.insert("name".to_string(), p.name());
-        let pod_status = p.status.unwrap();
-        let conditions = pod_status.conditions.unwrap();
-        println!("pod conditions ->");
-        println!("{:?}", conditions);
-        pod_data.insert("ip".to_string(), pod_status.pod_ip.unwrap());
-        pod_data.insert("status".to_string(), pod_status.phase.unwrap());
-        pod_data.insert("nominated_node".to_string(), pod_status.nominated_node_name.unwrap_or("<none>".to_string()));
-        let start_time = pod_status.start_time.unwrap();
-        pod_data.insert("start_time".to_string(), start_time.0.timestamp().to_string());
-
-        pods_list.push(pod_data);
-    }
-    Ok(pods_list)
-}
-
-#[tokio::main]
-async fn get_services()  -> Result<Vec<HashMap<String, String>>, Box<dyn std::error::Error>> {
-    let mut services_list: Vec<HashMap<String, String>> = vec![];
-    let client = Client::try_default().await?;
-    let services: Api<Service> = Api::default_namespaced(client);
-
-    for s in services.list(&ListParams::default()).await? {
-        let mut service_data: HashMap<String, String> = HashMap::new();
-        service_data.insert("name".to_string(), s.name());
-
-        let service_status = s.status.unwrap();
-
-    }
-
-
-
-    return Ok(services_list);
-
 }
