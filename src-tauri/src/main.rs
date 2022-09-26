@@ -9,7 +9,7 @@ mod resources;
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![get_pods_command, get_services_command])
+        .invoke_handler(tauri::generate_handler![get_pods_command, get_services_command, get_jobs_command])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
@@ -30,6 +30,16 @@ fn get_services_command() -> Vec<HashMap<String, String>> {
     let result_services = resources::get_services();
     match result_services {
         Ok(services) => services,
+        Err(_) => vec![]
+    }
+}
+
+#[tauri::command]
+fn get_jobs_command() -> Vec<HashMap<String, String>> {
+    println!("fetching jobs...");
+    let result_jobs = resources::get_jobs();
+    match result_jobs {
+        Ok(jobs) => jobs,
         Err(_) => vec![]
     }
 }

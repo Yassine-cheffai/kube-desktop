@@ -1,5 +1,6 @@
 use futures::{StreamExt, TryStreamExt};
 use k8s_openapi::api::core::v1::{Service, Pod};
+use k8s_openapi::{api::batch::v1::Job};
 use kube::{
     api::{Api, ListParams, PostParams, ResourceExt},
     Client,
@@ -18,7 +19,7 @@ pub async fn get_services() -> Result<Vec<HashMap<String, String>>, Box<dyn std:
     let services: Api<Service> = Api::default_namespaced(client);
     for s in services.list(&ListParams::default()).await? {
         let mut service_data: HashMap<String, String> = HashMap::new();
-        service_data.insert("name".to_string(), s.name());
+        service_data.insert("name".to_string(), s.name_any());
 
         let spec = s.spec.unwrap();
         service_data.insert(
@@ -70,7 +71,7 @@ pub async fn get_pods() -> Result<Vec<HashMap<String, String>>, Box<dyn std::err
     for p in pods.list(&ListParams::default()).await? {
         // println!("found pod {}", p.name());
         let mut pod_data:HashMap<String, String> = HashMap::new();
-        pod_data.insert("name".to_string(), p.name());
+        pod_data.insert("name".to_string(), p.name_any());
         let pod_status = p.status.unwrap();
         let conditions = pod_status.conditions.unwrap();
         println!("pod conditions ->");
@@ -84,4 +85,23 @@ pub async fn get_pods() -> Result<Vec<HashMap<String, String>>, Box<dyn std::err
         pods_list.push(pod_data);
     }
     Ok(pods_list)
+}
+
+#[tokio::main]
+pub async fn get_jobs() -> Result<Vec<HashMap<String, String>>, Box<(dyn std::error::Error)>> {
+    let client = Client::try_default().await?;
+    let mut jobs_list: Vec<HashMap<String, String>> = vec![];
+
+    let jobs: Api<Job> = Api::default_namespaced(client);
+    for job in jobs.list(&ListParams::default()).await? {
+        let mut job_data: HashMap<String, String> = HashMap::new();
+        job_data.insert("name".to_string(), job.name_any());
+
+        let job_status = job.status.unwrap();
+        let completions = format!("{}/{}", job_status.succeeded.unwrap_or(0), job_status.failed.unwrap_or(0)+job_status.succeeded.unwrap_or(0));
+        job_data.insert("completions".to_string(), completions);
+
+        jobs_list.push(job_data);
+    }
+    Ok(jobs_list)
 }

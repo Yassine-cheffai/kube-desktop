@@ -25,9 +25,10 @@ export type NameSpace = {
   createdAt: string,
 }
 export type Job = {
-  id: string,
   name: string,
-  createdAt: string,
+  completions: string,
+  duration: string,
+  age: string,
 }
 export type CronJob = {
   id: string,

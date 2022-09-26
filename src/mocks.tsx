@@ -28,9 +28,9 @@ export const getNameSpaces = () => {
 
 export const getJobs = () => {
     return [
-        { id: "1", name: "Job 1", createdAt: "11-09-2022" } as Job,
-        { id: "3", name: "Job 3", createdAt: "13-09-2022" } as Job,
-        { id: "2", name: "Job 2", createdAt: "12-09-2022" } as Job,
+        {name: "Job 1", completions: "1/1", duration: "20s", age: "46h" } as Job,
+        {name: "Job 1", completions: "1/1", duration: "20s", age: "46h" } as Job,
+        {name: "Job 1", completions: "1/1", duration: "20s", age: "46h" } as Job,
     ]
 }
 
