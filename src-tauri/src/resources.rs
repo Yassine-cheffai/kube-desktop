@@ -1,8 +1,7 @@
-use futures::{StreamExt, TryStreamExt};
-use k8s_openapi::api::core::v1::{Service, Pod};
-use k8s_openapi::{api::batch::v1::Job};
+use k8s_openapi::api::core::v1::{Service, Pod, Secret};
+use k8s_openapi::{api::batch::v1::{Job, CronJob}};
 use kube::{
-    api::{Api, ListParams, PostParams, ResourceExt},
+    api::{Api, ListParams, ResourceExt},
     Client,
 };
 use std::collections::BTreeMap;
@@ -104,4 +103,49 @@ pub async fn get_jobs() -> Result<Vec<HashMap<String, String>>, Box<(dyn std::er
         jobs_list.push(job_data);
     }
     Ok(jobs_list)
+}
+
+#[tokio::main]
+pub async fn get_cronjobs() -> Result<Vec<HashMap<String, String>>, Box<(dyn std::error::Error)>> {
+    let client = Client::try_default().await?;
+    let mut cronjobs_list: Vec<HashMap<String, String>> = vec![];
+
+    let cronjobs: Api<CronJob> = Api::default_namespaced(client);
+
+    for cronjob in cronjobs.list(&ListParams::default()).await? {
+        let mut cronjob_data: HashMap<String, String> = HashMap::new();
+        cronjob_data.insert("name".to_string(), cronjob.name_any());
+
+        let cronjob_status = cronjob.status.unwrap();
+        let last_successful_time = match cronjob_status.last_successful_time {
+            Some(time) => time.0.format("%d/%m/%Y %H:%M").to_string(),
+            None => "-".to_string()
+        };
+        cronjob_data.insert("last_successful_time".to_string(), last_successful_time);
+
+        let last_schedule_time = match cronjob_status.last_schedule_time {
+            Some(time) => time.0.format("%d/%m/%Y %H:%M").to_string(),
+            None => "-".to_string()
+        };
+        cronjob_data.insert("last_schedule_time".to_string(), last_schedule_time);
+
+        cronjobs_list.push(cronjob_data);
+    }
+    Ok(cronjobs_list)
+}
+#[tokio::main]
+pub async fn get_secrets() -> Result<Vec<HashMap<String, String>>, Box<(dyn std::error::Error)>> {
+    let client = Client::try_default().await?;
+    let mut secrets_list: Vec<HashMap<String, String>> = vec![];
+
+    let secrets: Api<Secret> = Api::default_namespaced(client);
+
+    for secret in secrets.list(&ListParams::default()).await? {
+        let mut secret_data: HashMap<String, String> = HashMap::new();
+        secret_data.insert("name".to_string(), secret.name_any());
+        secret_data.insert("type".to_string(), secret.type_.unwrap_or("UNKNOWN".to_string()));
+
+        secrets_list.push(secret_data);
+    }
+    Ok(secrets_list)
 }

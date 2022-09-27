@@ -36,9 +36,9 @@ export const getJobs = () => {
 
 export const getCronJobs = () => {
     return [
-        { id: "1", name: "CronJob 1", createdAt: "11-09-2022" } as CronJob,
-        { id: "3", name: "CronJob 3", createdAt: "13-09-2022" } as CronJob,
-        { id: "2", name: "CronJob 2", createdAt: "12-09-2022" } as CronJob,
+        {name: "CronJob 1", last_schedule_time: "11-09-2022", last_successful_time: "11-09-2022" } as CronJob,
+        {name: "CronJob 1", last_schedule_time: "11-09-2022", last_successful_time: "11-09-2022" } as CronJob,
+        {name: "CronJob 1", last_schedule_time: "11-09-2022", last_successful_time: "11-09-2022" } as CronJob,
     ]
 }
 
@@ -52,8 +52,8 @@ export const getConfigMaps = () => {
 
 export const getSecrets = () => {
     return [
-        { id: "1", name: "Secret 1", createdAt: "11-09-2022" } as Secret,
-        { id: "3", name: "Secret 3", createdAt: "13-09-2022" } as Secret,
-        { id: "2", name: "Secret 2", createdAt: "12-09-2022" } as Secret,
+        {name: "Secret 1",type: "Opaque", data: "3", age: "42d"} as Secret,
+        {name: "Secret 1",type: "Opaque", data: "3", age: "42d"} as Secret,
+        {name: "Secret 1",type: "Opaque", data: "3", age: "42d"} as Secret,
     ]
 }

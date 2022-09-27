@@ -31,9 +31,9 @@ export type Job = {
   age: string,
 }
 export type CronJob = {
-  id: string,
   name: string,
-  createdAt: string,
+  last_successful_time: string,
+  last_schedule_time: string,
 }
 export type ConfigMap = {
   id: string,
@@ -41,9 +41,10 @@ export type ConfigMap = {
   createdAt: string,
 }
 export type Secret = {
-  id: string,
   name: string,
-  createdAt: string,
+  type: string,
+  data: string,
+  age: string,
 }
 export const RESOURCES_TYPES = [
   "Services",
